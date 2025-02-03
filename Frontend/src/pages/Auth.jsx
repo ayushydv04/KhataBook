@@ -15,7 +15,7 @@ const Auth = () => {
     <div className="flex flex-col items-center min-h-screen bg-gray-100 justify-center">
       {/* Logo at the top left */}
       <div className="absolute top-4 left-4 text-3xl font-bold text-gray-700">
-        Khatabook.com
+        {/* Khatabook.com */}
       </div>
 
       <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
