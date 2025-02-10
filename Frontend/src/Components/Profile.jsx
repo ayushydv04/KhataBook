@@ -1,15 +1,34 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import API from '../api/axiosInstance';
 import ProfilePopUp from './ProfilePopUp';
+import { ThemeContext } from '../context/ThemeContext';
 
 const Profile = () => {
+  const { theme } = useContext(ThemeContext);
+  const navigate = useNavigate();
+
   const [isProfilePopupOpen, setIsProfilePopupOpen] = useState(false);
 
   const handleProfileClick = () => {
-    setIsProfilePopupOpen(true); // Open the ProfilePopup when "My Profile" is clicked
+    setIsProfilePopupOpen(true);
   };
 
   const closeProfilePopup = () => {
-    setIsProfilePopupOpen(false); // Close the ProfilePopup
+    setIsProfilePopupOpen(false);
+  };
+
+  // Logout function
+  const handleLogout = async () => {
+    try {
+      await API.post('/auth/logout', {}, { withCredentials: true });
+      toast.success('Logged out successfully');
+      navigate('/'); // Redirect to login/signup page
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Logout failed');
+      console.error("Logout Error:", error.response?.data);
+    }
   };
 
   return (
@@ -21,15 +40,14 @@ const Profile = () => {
       />
       {/* Dropdown menu */}
       <div className="group-hover:block hidden absolute dropdown-menu right-0 pt-4">
-        <div className="flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded">
-          <p
-            className="cursor-pointer hover:text-black"
-            onClick={handleProfileClick} // Open ProfilePopup
-          >
+        <div className={`flex flex-col gap-2 w-36 py-3 px-5 ${theme === "dark" ? "bg-[#2c2c2c] text-[#e9e9e9]" : "bg-slate-100 text-gray-500"} rounded`}>
+          <p className="cursor-pointer hover:text-black" onClick={handleProfileClick}>
             My Profile
           </p>
           <p className="cursor-pointer hover:text-black">Order</p>
-          <p className="cursor-pointer hover:text-black">Logout</p>
+          <p className="cursor-pointer hover:text-black" onClick={handleLogout}>
+            Logout
+          </p>
         </div>
       </div>
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import HisaabCardAvailable from "../Components/HisaabCardAvailable";
 import HisaabCardEncrypted from "../Components/HisaabCardEncrypted";
@@ -7,19 +7,24 @@ import Profile from "../Components/Profile";
 import Navbar from "../Components/Navbar";
 import Filters from "../Components/Filters";
 
+
+
+import { SlCalender } from "react-icons/sl";
+
 const Home = () => {
+
   return (
     <div className="ml-15">
         {/* Navbar */}
         <Navbar/>
 
         <div>
-            <div className="flex h-20 ">
-            <Link to="/create-hisaab">
-            <h3 className="w-60 h-10 pt-1.5 ml-5 mt-10 block border rounded-md text-center cursor-pointer">
-              Create New Hisaab
-            </h3>
-          </Link>
+            <div className="boxs flex h-20 ">
+              <Link to="/create-hisaab">
+                <h3 className="w-60 h-10 pt-1.5 ml-5 mt-10 block border rounded-md text-center cursor-pointer">
+                  Create New Hisaab
+                </h3>
+              </Link>
             </div>
 
 
@@ -36,6 +41,7 @@ const Home = () => {
                 <HisaabCardAvailable/>
                 <HisaabCardAvailable/>
             </div>
+
 
 
         </div>

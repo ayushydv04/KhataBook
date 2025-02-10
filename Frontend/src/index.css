@@ -1,1 +1,48 @@
 @import "tailwindcss";
+
+
+* {
+  user-select: none; /* Prevents accidental text selection */
+}
+
+
+/* Light mode styles */
+body {
+  @apply bg-white text-black;
+}
+
+/* Dark mode styles */
+.dark body {
+  @apply bg-[#09090b] text-white;
+}
+/* #09090b */
+/* #222222 */
+/* #121212 */
+
+
+/* Hide the default placeholder text */
+/* @media (prefers-color-scheme: dark) { */
+  input[type="date"]::-webkit-input-placeholder {
+      /* visibility: hidden; */
+      filter: invert(1);
+      
+  }
+  
+  /* Hide the default calendar icon and date format */
+  /* to hide date format */
+  input[type="date"]::-webkit-datetime-edit {
+    visibility: hidden;
+    filter: invert(1);
+  }
+  
+  input[type="date"]::-webkit-datetime-edit-fields-wrapper {
+    /* visibility: hidden; */
+    filter: invert(1);
+  }
+  
+  /* Hide the default date picker icon */
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    /* display: none; */
+    filter: invert(1);
+  }
+/* }   */

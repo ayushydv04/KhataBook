@@ -1,6 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
+import{ useContext, useState } from "react";
+import { ThemeContext } from "../context/ThemeContext";
 
 const ProfilePopUp = ({ onClose }) => {
+
+  const {theme} = useContext(ThemeContext)
+
   // Mock existing data for the profile
   const [profileData, setProfileData] = useState({
     name: "John Doe",
@@ -12,7 +17,7 @@ const ProfilePopUp = ({ onClose }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70" >
-      <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-[400px] relative">
+      <div className={`${theme === "dark" ? "bg-[#1c1a1a]" : "bg-white"} rounded-lg shadow-lg p-6 w-full max-w-[400px] relative`}>
         <div className="flex gap-6">
           {/* Left Side: Profile Image */}
           <div className="flex flex-col items-center gap-2">
@@ -32,7 +37,7 @@ const ProfilePopUp = ({ onClose }) => {
                 type="text"
                 value={profileData.name}
                 readOnly
-                className="w-full border rounded px-2 py-1 focus:outline-none bg-gray-100"
+                className={`w-full border rounded px-2 py-1 focus:outline-none ${theme === "dark" ? "bg-[#2c2c2c]" : "bg-gray-100"} `}
               />
             </div>
             <div>
@@ -41,7 +46,7 @@ const ProfilePopUp = ({ onClose }) => {
                 type="email"
                 value={profileData.email}
                 readOnly
-                className="w-full border rounded px-2 py-1 focus:outline-none bg-gray-100"
+                className={`w-full border rounded px-2 py-1 focus:outline-none ${theme === "dark" ? "bg-[#2c2c2c]" : "bg-gray-100"}`}
               />
             </div>
             <div>
@@ -50,7 +55,7 @@ const ProfilePopUp = ({ onClose }) => {
                 type="tel"
                 value={profileData.phone}
                 readOnly
-                className="w-full border rounded px-2 py-1 focus:outline-none bg-gray-100"
+                className={`w-full border rounded px-2 py-1 focus:outline-none ${theme === "dark" ? "bg-[#2c2c2c]" : "bg-gray-100"}`}
               />
             </div>
             <button className="w-full bg-blue-600 text-white py-2 rounded mt-4 hover:bg-blue-700">
