@@ -76,3 +76,10 @@ module.exports.loginUser = async (req, res) => {
 module.exports.logoutUser = (req, res) => { 
   res.cookie("token", "", { httpOnly: true, secure: true, expires: new Date(0) }).status(200).json({ message: "Logged out" });
 };
+
+
+
+
+module.exports.verifyUser = (req, res) => { 
+  res.status(200).json({ isAuthenticated: true});  
+};

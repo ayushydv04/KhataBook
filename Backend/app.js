@@ -10,6 +10,9 @@ const errorHandler = require("./middlewares/errorMiddleware")
 
 const authRoutes = require("./routes/authRoutes");
 const hisaabRoutes = require("./routes/hisaabRoutes");
+// const protect = require("./middlewares/protect")
+
+const {protect} = require("./middlewares/protect")
 
 connectDB();
 
@@ -29,7 +32,11 @@ app.use(express.json()); // Parses JSON bodies
 app.use(express.urlencoded({ extended: true })); // Parses URL-encoded data
 
 // Routes
+app.get("/home", protect, (req, res) => {
+    res.redirect("/home");  // Use `res.redirect`
+});
 app.use("/auth", authRoutes);
+
 // app.use("/hisaab", hisaabRoutes);
 
 

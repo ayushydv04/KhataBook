@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -8,6 +8,20 @@ const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", password: "" });
   const navigate = useNavigate();
+
+  // Check if user is already logged in
+  useEffect(() => {
+    API.get("/auth/verify", { withCredentials: true })
+      .then((res) => {
+        if (res.data.isAuthenticated) {
+          localStorage.setItem("isAuthenticated", "true"); // Save auth status
+          navigate("/home"); // Redirect logged-in users
+        }
+      })
+      .catch(() => {
+        localStorage.removeItem("isAuthenticated"); // Clear if not authenticated
+      });
+  }, []);
 
   // Handle Input Change
   const handleChange = (e) => {
@@ -20,15 +34,13 @@ const Auth = () => {
     try {
       const url = isLogin ? "/auth/login" : "/auth/register";
       const { data } = await API.post(url, formData, { withCredentials: true });
-  
-      // ✅ Show success toast when login/register is successful
+
       toast.success(data.message || (isLogin ? "Login Successful!" : "Account Created Successfully!"));
-  
-      navigate("/home");  // Redirect after successful login/register
+      
+      localStorage.setItem("isAuthenticated", "true"); // Set login status
+      navigate("/home"); // Redirect after login/register
     } catch (error) {
-      console.error("Auth Error:", error.message); // Debugging purpose
-  
-      // ✅ Proper error handling for failed login/register
+      console.error("Auth Error:", error.message);
       const errorMsg = error.response?.data?.message || "Something went wrong!";
       toast.error(errorMsg);
     }
@@ -91,10 +103,7 @@ const Auth = () => {
               required
             />
           </div>
-          <button
-            type="submit"
-            className="w-full cursor-pointer px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600"
-          >
+          <button type="submit" className="w-full cursor-pointer px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600">
             {isLogin ? "Login" : "Sign Up"}
           </button>
         </form>
@@ -103,7 +112,7 @@ const Auth = () => {
           <button
             onClick={() => {
               setIsLogin(!isLogin);
-              setFormData({ name: "", email: "", phone: "", password: "" }); // Reset form
+              setFormData({ name: "", email: "", phone: "", password: "" });
             }}
             className="text-blue-500 hover:underline"
           >

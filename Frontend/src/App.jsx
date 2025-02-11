@@ -1,5 +1,5 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Auth from "./pages/Auth";
 import Home from "./pages/Home";
 import CreateHisaab from "./Components/CreateHisaab";
@@ -8,9 +8,13 @@ import Collaborative from "./pages/Collaborative";
 import ToPay from "./pages/ToPay";
 import { ToastContainer } from "react-toastify";
 
+
 const App = () => {
+
+
   return (
     <ThemeProvider>
+
       <ToastContainer position="top-right" autoClose={3000} />
       <Router>
         <Routes>

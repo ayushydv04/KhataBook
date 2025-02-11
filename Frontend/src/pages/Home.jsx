@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import HisaabCardAvailable from "../Components/HisaabCardAvailable";
 import HisaabCardEncrypted from "../Components/HisaabCardEncrypted";
 import Profile from "../Components/Profile";
@@ -10,8 +10,24 @@ import Filters from "../Components/Filters";
 
 
 import { SlCalender } from "react-icons/sl";
+import axios from "axios";
 
 const Home = () => {
+
+  const navigate = useNavigate();
+  
+
+  useEffect(() => {
+    axios.get("http://localhost:5000/auth/verify", { withCredentials: true })
+      .then(response => {
+        if (!response.data.isAuthenticated) {
+          navigate("/"); // Redirect if not authenticated
+        }
+      })
+      .catch(() => {
+        navigate("/"); // Redirect on error
+      });
+  }, []);
 
   return (
     <div className="ml-15">

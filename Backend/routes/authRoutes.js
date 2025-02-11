@@ -2,12 +2,14 @@
 const express = require("express");
 const { body } = require("express-validator"); // Import express-validator
 const router = express.Router();
+const {protect} = require("../middlewares/protect");
 
 // Importing controllers
 const {
   registerUser,
   loginUser,
   logoutUser,
+  verifyUser,
 } = require("../controllers/authController");
 
 
@@ -25,6 +27,8 @@ router.post(
 
 router.post("/login", loginUser);
 router.post("/logout", logoutUser);
+
+router.get("/verify",protect, verifyUser);
 
 
 module.exports = router;
